@@ -1,9 +1,10 @@
+import javax.naming.SizeLimitExceededException;
 import java.util.List;
 import java.util.ArrayList;
 
 public class ColourTable {
     private final int paletteSize;
-    private final List<Integer> colourList = new ArrayList<Integer>();
+    private final List<Integer> colourList = new ArrayList<>();
 
     public ColourTable(int paletteSize) {
         // check that value is greater than 0 and bitwise AND to check power of 2
@@ -21,6 +22,8 @@ public class ColourTable {
             throw new IllegalArgumentException("RGB value cannot exceed 24 bits");
         } else if (RGBValue < 0) {
             throw new IllegalArgumentException("RGB value must be positive");
+        } else if (colourList.size() == paletteSize) {
+            throw new IllegalStateException("Colour table is full");
         }
         colourList.add(RGBValue);
     }

@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.Test;
+
+import javax.naming.SizeLimitExceededException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ColourTableTest {
@@ -17,5 +20,11 @@ public class ColourTableTest {
         ColourTable table = new ColourTable(1);
         assertThrows(IllegalArgumentException.class, () -> table.add(170000000), "RGB Value must be no larger than 24-bit.");
         assertThrows(IllegalArgumentException.class, () -> table.add(-5), "RGB Value must be a positive integer.");
+    }
+    @Test
+    void testFullTable() {
+        ColourTable table = new ColourTable(1);
+        table.add(5);
+        assertThrows(IllegalStateException.class, () -> table.add(4), "Size limit exceeded");
     }
 }
